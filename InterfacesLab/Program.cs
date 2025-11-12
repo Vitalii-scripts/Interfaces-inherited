@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Lab;
 class Program
 {
     static void TestAPlusBSquare<T>(T a, T b) where T : IMyNumber<T>
