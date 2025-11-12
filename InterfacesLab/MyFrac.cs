@@ -11,9 +11,22 @@ namespace Lab
 
         public MyFrac(BigInteger nom, BigInteger denom)
         {
-            this.nom = nom;
-            this.denom = denom;
+            if (denom.IsZero)
+                throw new DivideByZeroException("Denominator cannot be zero.");
+
+            if (denom < 0)
+            {
+                nom = -nom;
+                denom = -denom;
+            }
+
+            BigInteger gcd = BigInteger.GreatestCommonDivisor(BigInteger.Abs(nom), BigInteger.Abs(denom));
+            this.nom = nom / gcd;
+            this.denom = denom / gcd;
         }
+         public MyFrac(BigInteger nom) : this(nom, 1) { }
+
+        public MyFrac(int nom, int denom) : this((BigInteger)nom, (BigInteger)denom) { }
 
         public MyFrac(MyFrac copy)
         {
@@ -41,13 +54,19 @@ namespace Lab
         {
             return new MyFrac(nom * that.denom - that.nom * denom, denom * that.denom);
         }
+        public (BigInteger num, BigInteger denum) Simplify()
+        {
+            BigInteger gcd = BigInteger.GreatestCommonDivisor(BigInteger.Abs(nom), BigInteger.Abs(denom));
+            return (nom / gcd, denom / gcd);
+        }
 
         public override string ToString()
         {
-            if (denom == 1)
-                return $"{nom}";
+            var (num, denum) = Simplify();
+            if (denum == 1)
+                return $"{num}";
             else
-                return $"{nom}/{denom}";
+                return $"{num}/{denum}";
         }
     }
 }

@@ -11,6 +11,9 @@ public class MyComplex : IMyNumber<MyComplex>
         this.re = re;
         this.im = im;
     }
+    public MyComplex() : this(0, 0) { }
+
+    public MyComplex(double re) : this(re, 0) { }
     public MyComplex Add(MyComplex that)
     {
         return new MyComplex(re+that.re,im+that.im);
