@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace Lab
 {
-    public class MyFrac : IMyNumber<MyFrac>
+    public class MyFrac : IMyNumber<MyFrac>, IComparable<MyFrac>
     {
         public BigInteger nom { get; set; }
         public BigInteger denom { get; set; }
@@ -67,6 +67,13 @@ namespace Lab
                 return $"{num}";
             else
                 return $"{num}/{denum}";
+        }
+        public int CompareTo(MyFrac? other)
+        {
+            if (other is null) return 1;
+            BigInteger left = nom * other.denom;
+            BigInteger right = other.nom * denom;
+            return left.CompareTo(right);
         }
     }
 }
